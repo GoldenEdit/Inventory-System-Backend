@@ -168,11 +168,8 @@ Python & Flask
 
 PostgreSQL: A powerful open-source relational database for storing the inventory data. (Temp using SQLite)
 
-**ORM (Object-Relational Mapping):**
 
-Sequelize: A promise-based ORM for Node.js that allows you to interact with the PostgreSQL database using JavaScript models.
-
-**Authentication** :
+**Authentication:**
 
 JSON Web Tokens (JWT): A standard for securely transmitting information between parties as JSON objects.
 
@@ -182,4 +179,8 @@ Chart.js: A JavaScript library for creating interactive and visually appealing c
 
 **Hosting:**
 
-Amazon Web Services (AWS), Microsoft Azure, OVH: Cloud platforms for hosting the application and database.
+Amazon Web Services (AWS), Microsoft Azure, OVH, AWS S3 / CloudFlare S3 / Wasabi S3: Cloud platforms for hosting the application, database and image storage.
+
+All proxied through Cloudflare.
+
+Need to discuss GDPR Compliance, Maybe host on school Network many security and access implications
