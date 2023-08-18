@@ -10,6 +10,8 @@ from datetime import datetime
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///inventory.db'  # Using SQLite for testing
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['JWT_SECRET_KEY'] = '57fb8e0169261ee55a08669d184976ae8d914c32f012bd0d' 
+
 
 bcrypt = Bcrypt(app)
 jwt = JWTManager(app)
@@ -172,6 +174,14 @@ class Role(db.Model):
 
 
 # >>>>>> API Routes <<<<<<
+
+@app.after_request
+def after_request(response):
+  response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000') # origin local for testing
+  response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+  response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+  response.headers.add('Access-Control-Allow-Credentials', 'true')
+  return response
 
 
 # ASSET
@@ -563,7 +573,6 @@ def delete_role(id):
 # LOGIN
 
 @app.route('/login', methods=['POST'])
-@jwt_required()
 def login():
     data = request.get_json()
     email = data.get('email')
@@ -577,6 +586,31 @@ def login():
     access_token = create_access_token(identity=user.id)
     return jsonify({"access_token": access_token, "is_admin": user.is_admin})
 
+
+# SIGNUP
+
+
+@app.route('/signup', methods=['POST'])
+def signup():
+    data = request.get_json()
+
+    # Check if email already exists in database
+    existing_user = People.query.filter_by(email=data['email']).first()
+    if existing_user:
+        return make_response(jsonify({"message": "Email already exists!"}), 400)
+
+    # Create a new user and set their password
+    new_user = People(email=data['email'], person_name=data['name'])  # assuming person_name and other details are in the request
+    new_user.set_password(data['password'])  # hashes and sets the password
+
+    # Add other fields if needed from the request data
+    # ...
+
+    # Add the user to the database
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({"message": "User registered successfully!"}), 201
 
 
 
