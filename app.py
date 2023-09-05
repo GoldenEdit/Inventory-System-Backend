@@ -613,7 +613,17 @@ def signup():
     return jsonify({"message": "User registered successfully!"}), 201
 
 
-
+# STATISTICS
+@app.route('/statistics', methods=['GET'])
+@jwt_required()
+def get_statistics():
+    total_assets = db.session.query(Asset).count()
+    total_users = db.session.query(People).count()
+    
+    return jsonify({
+        "total_assets": total_assets,
+        "total_users": total_users
+    }), 200
 
 
 
