@@ -10,6 +10,7 @@
      * Make sure not to commit any of your venv files if you make a commit!!!
    * Run `.\venv\Scripts\activate` in the repo folder to active venv
 4. Install requirements from [requirements.txt](https://github.com/GoldenEdit/Inventory-System-Backend/blob/main/requirements.txt) (`pip install -r requirements.txt`)
+5. To start the program `python app.py`
 
 
 # Read the [docs](https://github.com/GoldenEdit/Inventory-System-Backend/wiki).
