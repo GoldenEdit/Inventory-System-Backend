@@ -48,6 +48,36 @@ class Asset(db.Model):
     asset_type_id = db.Column(db.Integer, db.ForeignKey('asset_type.id'))
 
         # TODO Asset serialization code needed
+    def asset_serialize(self):
+        return{
+             "id": self.id,
+            "group_id": self.group_id,
+            "allocation_id": self.allocation_id,
+            "location_id": self.location_id,
+            "home_id": self.home_id,
+            "barcode": self.barcode,
+            "picture": self.picture,
+            "rfid": self.rfid,
+            "qr_code": self.qr_code,
+            "asset_name": self.asset_name,
+            "asset_serial": self.asset_serial,
+            "model_id": self.model_id,
+            "asset_description": self.asset_description,
+            "manufacturer": self.manufacturer,
+            "purchase_date": self.purchase_date,
+            "disposal_date": self.disposal_date,
+            "disposal_reason": self.disposal_reason,
+            "disposal_type_id": self.disposal_type_id,
+            "colour": self.colour,
+            "estimated_value": self.estimated_value,
+            "purchase_supplier": self.purchase_supplier,
+            "date_purchased": self.date_purchased,
+            "warranty_details": self.warranty_details,
+            "high_value": self.high_value,
+            "cannot_lend": self.cannot_lend,
+            "asset_owner": self.asset_owner,
+            "asset_type_id": self.asset_type_id
+        }
 
 class Group(db.Model):
     id = db.Column(db.Integer, primary_key=True)
