@@ -2,7 +2,7 @@ from flask import Flask, make_response, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt, decode_token
-from flask_wtf.csrf import generate_csrf
+from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_cors import CORS
 from datetime import datetime
 
@@ -16,6 +16,10 @@ app.config['JWT_SECRET_KEY'] = '57fb8e0169261ee55a08669d184976ae8d914c32f012bd0d
 app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 app.config['JWT_ACCESS_COOKIE_NAME'] = 'access_token'
 app.secret_key = "cda50149471a557db65e6e604fe7147e7e92a4f32657d164086697eb555d5d55"
+app.config['WTF_CSRF_TIME_LIMIT'] = 86,400  # 1 day
+app.config['WTF_CSRF_CHECK_DEFAULT'] = False  # Disable default CSRF check
+
+csrf = CSRFProtect(app)
 
 CORS(app, resources={
     r"/*": {
@@ -619,6 +623,7 @@ def delete_role(id):
 # LOGIN
 
 @app.route('/login', methods=['POST'])
+@csrf.exempt  # Disable CSRF protection for this route
 def login():
     data = request.get_json()
     email = data.get('email')
@@ -645,6 +650,7 @@ def login():
 
 
 @app.route('/signup', methods=['POST'])
+@csrf.exempt # Disable CSRF protection for this route
 def signup():
     data = request.get_json()
 
