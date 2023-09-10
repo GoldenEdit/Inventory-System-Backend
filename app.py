@@ -680,6 +680,19 @@ def check_admin_status():
 
 
 
+# DEBUGGING
+
+from flask_jwt_extended import decode_token
+
+@app.route('/test', methods=['GET'])
+def test():
+    token = request.cookies.get('access_token')
+    try:
+        decoded_token = decode_token(token)
+        return jsonify({"msg": "Token is valid", "payload": decoded_token})
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 401
+
 
 
 if __name__ == '__main__':
