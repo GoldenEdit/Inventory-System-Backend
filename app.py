@@ -661,5 +661,5 @@ def get_statistics():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()  # Creates the tables in the database
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0:$PORT')
 
