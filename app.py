@@ -11,6 +11,8 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///inventory.db'  # Using SQLite for testing
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = '57fb8e0169261ee55a08669d184976ae8d914c32f012bd0d' 
+app.config['JWT_TOKEN_LOCATION'] = ['cookies']
+
 
 
 bcrypt = Bcrypt(app)
@@ -207,7 +209,7 @@ class Role(db.Model):
 
 @app.after_request
 def after_request(response):
-  response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000') # origin local for testing
+  response.headers.add('Access-Control-Allow-Origin', 'https://inv.goldenedit.dev') # origin local for testing
   response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
   response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
   response.headers.add('Access-Control-Allow-Credentials', 'true')
