@@ -19,8 +19,6 @@ app.secret_key = "cda50149471a557db65e6e604fe7147e7e92a4f32657d164086697eb555d5d
 app.config['WTF_CSRF_TIME_LIMIT'] = 86,400  # 1 day
 app.config['WTF_CSRF_CHECK_DEFAULT'] = False  # Disable default CSRF check
 app.config['WTF_CSRF_HEADERS'] = ['X-CSRFToken']
-app.config['CORS_SUPPORTS_CREDENTIALS'] = True
-app.config['CORS_EXPOSE_HEADERS'] = ['Set-Cookie']
 
 
 
@@ -233,6 +231,7 @@ def after_request(response):
   response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
   response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
   response.headers.add('Access-Control-Allow-Credentials', 'true')
+  print(request.headers)
   return response
 
 
