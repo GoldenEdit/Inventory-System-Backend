@@ -1,8 +1,9 @@
 from flask import Flask, make_response, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt, decode_token
 from flask_wtf.csrf import generate_csrf
+from flask_cors import CORS
 from datetime import datetime
 
 
@@ -15,6 +16,8 @@ app.config['JWT_SECRET_KEY'] = '57fb8e0169261ee55a08669d184976ae8d914c32f012bd0d
 app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 app.config['JWT_ACCESS_COOKIE_NAME'] = 'access_token'
 app.secret_key = "cda50149471a557db65e6e604fe7147e7e92a4f32657d164086697eb555d5d55"
+
+CORS(app, resources={r"/*": {"origins": "https://inv.goldenedit.dev", "expose_headers": ["X-CSRFToken"]}})
 
 
 
@@ -691,8 +694,6 @@ def check_admin_status():
 
 
 # DEBUGGING
-
-from flask_jwt_extended import decode_token
 
 @app.route('/test', methods=['GET'])
 def test():
