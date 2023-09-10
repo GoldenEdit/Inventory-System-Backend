@@ -702,6 +702,8 @@ def testAdmin():
     
     if not current_jwt["is_admin"]:
         return "Unauthorized", 401
+    else :
+        return "Authorized", 200
 
 
 
