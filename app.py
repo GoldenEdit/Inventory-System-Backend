@@ -1,7 +1,7 @@
 from flask import Flask, make_response, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required,  get_jwt
 from datetime import datetime
 
 
@@ -661,12 +661,20 @@ def get_statistics():
     }), 200
 
 
-# Check Session (for frontend)
+# Check Session
 
 @app.route('/check_session', methods=['GET'])
 @jwt_required()
 def check_session():
     return jsonify({"authenticated": True}), 200
+
+
+# Check Admin Status
+@app.route('/check_admin_status', methods=['GET'])
+@jwt_required()
+def check_admin_status():
+    current_jwt = get_jwt()
+    return jsonify({"is_admin": current_jwt["is_admin"]}), 200
 
 
 
