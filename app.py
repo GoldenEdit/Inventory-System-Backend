@@ -613,8 +613,13 @@ def login():
     if not user or not user.check_password(password):
         return jsonify({"message": "Invalid email or password"}), 401
 
-    access_token = create_access_token(identity=user.id)
-    return jsonify({"access_token": access_token, "is_admin": user.is_admin})
+    access_token = create_access_token(identity=user.id, additional_claims={"is_admin": user.is_admin})
+    
+    resp = make_response(jsonify({"message": "Logged in"}))
+    resp.set_cookie('access_token', access_token, httponly=True, secure=True)  # Make it secure when using HTTPS
+    resp.set_cookie('is_admin', str(user.is_admin), httponly=True, secure=True)
+    
+    return resp
 
 
 # SIGNUP
@@ -654,6 +659,15 @@ def get_statistics():
         "total_assets": total_assets,
         "total_users": total_users
     }), 200
+
+
+# Check Session (for frontend)
+
+@app.route('/check_session', methods=['GET'])
+@jwt_required()
+def check_session():
+    return jsonify({"authenticated": True}), 200
+
 
 
 
