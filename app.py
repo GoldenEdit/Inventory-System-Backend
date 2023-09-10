@@ -211,7 +211,7 @@ class Role(db.Model):
 
 @app.after_request
 def after_request(response):
-  response.headers.add('Access-Control-Allow-Origin', 'https://inv.goldenedit.dev') # origin local for testing
+  response.headers.add('Access-Control-Allow-Origin', 'https://inv.goldenedit.dev')
   response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
   response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
   response.headers.add('Access-Control-Allow-Credentials', 'true')
@@ -694,6 +694,14 @@ def test():
         return jsonify({"msg": "Token is valid", "payload": decoded_token})
     except Exception as e:
         return jsonify({"msg": str(e)}), 401
+    
+@app.route('/test-admin', methods=['GET'])
+@jwt_required()
+def testAdmin():
+    current_jwt = get_jwt()
+    
+    if not current_jwt["is_admin"]:
+        return "Unauthorized", 401
 
 
 
