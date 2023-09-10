@@ -17,7 +17,12 @@ app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 app.config['JWT_ACCESS_COOKIE_NAME'] = 'access_token'
 app.secret_key = "cda50149471a557db65e6e604fe7147e7e92a4f32657d164086697eb555d5d55"
 
-CORS(app, resources={r"/*": {"origins": "https://inv.goldenedit.dev", "expose_headers": ["X-CSRFToken"]}})
+CORS(app, resources={
+    r"/*": {
+        "origins": ["https://inv.goldenedit.dev"],
+        "allow_headers": ["Content-Type", "Authorization", "X-CSRFToken"],
+    }
+})
 
 
 
