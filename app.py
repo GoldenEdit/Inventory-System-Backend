@@ -12,6 +12,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///inventory.db'  # Using SQLite
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = '57fb8e0169261ee55a08669d184976ae8d914c32f012bd0d' 
 app.config['JWT_TOKEN_LOCATION'] = ['cookies']
+app.config['JWT_ACCESS_COOKIE_NAME'] = 'access_token'
+
 
 
 
@@ -618,7 +620,7 @@ def login():
     access_token = create_access_token(identity=user.id, additional_claims={"is_admin": user.is_admin})
     
     resp = make_response(jsonify({"message": "Logged in"}))
-    resp.set_cookie('access_token', access_token, httponly=True, secure=True, samesite='None')  # Make it secure when using HTTPS
+    resp.set_cookie('access_token', access_token, httponly=True, secure=True, samesite='None')
     resp.set_cookie('is_admin', str(user.is_admin), httponly=True, secure=True, samesite='None')
     
     return resp
