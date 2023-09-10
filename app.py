@@ -225,9 +225,12 @@ def after_request(response):
 @jwt_required()
 def create_asset():
     data = request.get_json()
-    new_asset = Asset(**data)
-    db.session.add(new_asset)
-    db.session.commit()
+    try:
+        new_asset = Asset(**data)
+        db.session.add(new_asset)
+        db.session.commit()
+    except Exception as e:
+        return jsonify({"message": str(e)}), 400
     return jsonify({"message": "Asset created", "asset": new_asset.serialize()}), 201
 
 # Get All Assets
