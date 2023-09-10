@@ -616,8 +616,8 @@ def login():
     access_token = create_access_token(identity=user.id, additional_claims={"is_admin": user.is_admin})
     
     resp = make_response(jsonify({"message": "Logged in"}))
-    resp.set_cookie('access_token', access_token, httponly=True, secure=True)  # Make it secure when using HTTPS
-    resp.set_cookie('is_admin', str(user.is_admin), httponly=True, secure=True)
+    resp.set_cookie('access_token', access_token, httponly=True, secure=True, samesite='None')  # Make it secure when using HTTPS
+    resp.set_cookie('is_admin', str(user.is_admin), httponly=True, secure=True, samesite='None')
     
     return resp
 
