@@ -68,14 +68,14 @@ class Asset(db.Model):
             "model_id": self.model_id,
             "asset_description": self.asset_description,
             "manufacturer": self.manufacturer,
-            "purchase_date": self.purchase_date,
-            "disposal_date": self.disposal_date,
+            "purchase_date": self.purchase_date.isoformat(),
+            "disposal_date": self.disposal_date.isoformat(),
             "disposal_reason": self.disposal_reason,
             "disposal_type_id": self.disposal_type_id,
             "colour": self.colour,
             "estimated_value": self.estimated_value,
             "purchase_supplier": self.purchase_supplier,
-            "date_purchased": self.date_purchased,
+            "date_purchased": self.date_purchased.isoformat(),
             "warranty_details": self.warranty_details,
             "high_value": self.high_value,
             "cannot_lend": self.cannot_lend,
@@ -141,8 +141,8 @@ class Allocations(db.Model):
             "id": self.id,
             "person_id": self.person_id,
             "timestamp": self.timestamp,
-            "return_due_date": self.return_due_date,
-            "returned_date": self.returned_date
+            "return_due_date": self.return_due_date.isoformat(),
+            "returned_date": self.returned_date.isoformat(),
         }
 
 class People(db.Model):
