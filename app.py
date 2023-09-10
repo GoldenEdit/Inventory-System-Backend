@@ -1,7 +1,8 @@
 from flask import Flask, make_response, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required,  get_jwt
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt
+from flask_wtf.csrf import generate_csrf
 from datetime import datetime
 
 
@@ -616,16 +617,19 @@ def login():
     password = data.get('password')
 
     user = People.query.filter_by(email=email).first()
-    
+
     if not user or not user.check_password(password):
         return jsonify({"message": "Invalid email or password"}), 401
 
     access_token = create_access_token(identity=user.id, additional_claims={"is_admin": user.is_admin})
     
+    csrf_token = generate_csrf()  # Generate CSRF token
+    
     resp = make_response(jsonify({"message": "Logged in"}))
     resp.set_cookie('access_token', access_token, httponly=True, secure=True, samesite='None')
+    resp.set_cookie('csrf_token', csrf_token, httponly=False, secure=True, samesite='None')  # Set CSRF token in cookie
     resp.set_cookie('is_admin', str(user.is_admin), httponly=True, secure=True, samesite='None')
-    
+
     return resp
 
 
