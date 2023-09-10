@@ -62,7 +62,7 @@ class Asset(db.Model):
     asset_type_id = db.Column(db.Integer, db.ForeignKey('asset_type.id'))
 
         # TODO Asset serialization code needed
-    def asset_serialize(self):
+    def serialize(self):
         return{
              "id": self.id,
             "group_id": self.group_id,
