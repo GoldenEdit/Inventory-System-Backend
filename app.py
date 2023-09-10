@@ -18,6 +18,11 @@ app.config['JWT_ACCESS_COOKIE_NAME'] = 'access_token'
 app.secret_key = "cda50149471a557db65e6e604fe7147e7e92a4f32657d164086697eb555d5d55"
 app.config['WTF_CSRF_TIME_LIMIT'] = 86,400  # 1 day
 app.config['WTF_CSRF_CHECK_DEFAULT'] = False  # Disable default CSRF check
+app.config['WTF_CSRF_HEADERS'] = ['X-CSRFToken']
+app.config['CORS_SUPPORTS_CREDENTIALS'] = True
+app.config['CORS_EXPOSE_HEADERS'] = ['Set-Cookie']
+
+
 
 csrf = CSRFProtect(app)
 
