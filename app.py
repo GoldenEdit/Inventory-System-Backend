@@ -708,7 +708,7 @@ def check_admin_status():
 
 # DEBUGGING
 
-@app.route('/test', methods=['GET'])
+@app.route('/test/', methods=['GET'])
 def test():
     token = request.cookies.get('access_token')
     try:
