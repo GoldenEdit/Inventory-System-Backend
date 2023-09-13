@@ -14,4 +14,8 @@ class Item(Base):
     title = Column(String, index=True)
     description = Column(String, index=True)
     owner_id = Column(Integer, ForeignKey("user.id"))
+<<<<<<< Updated upstream
     owner = relationship("User", back_populates="items")
+=======
+    owner = relationship("User", back_populates="items")
+>>>>>>> Stashed changes

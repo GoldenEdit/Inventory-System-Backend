@@ -10,4 +10,8 @@ class Base:
     # Generate __tablename__ automatically
     @declared_attr
     def __tablename__(cls) -> str:
+<<<<<<< Updated upstream
         return cls.__name__.lower()
+=======
+        return cls.__name__.lower()
+>>>>>>> Stashed changes

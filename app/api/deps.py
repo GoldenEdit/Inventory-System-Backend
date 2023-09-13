@@ -52,7 +52,11 @@ def get_current_active_user(
 
 
 def get_current_active_superuser(
+<<<<<<< Updated upstream
     current_user: models.User = Depends(get_current_user),
+=======
+    current_user: models.User = Depends(get_current_active_user),
+>>>>>>> Stashed changes
 ) -> models.User:
     if not crud.user.is_superuser(current_user):
         raise HTTPException(
