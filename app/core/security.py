@@ -31,8 +31,4 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 
 def get_password_hash(password: str) -> str:
-<<<<<<< Updated upstream
     return pwd_context.hash(password)
-=======
-    return pwd_context.hash(password)
->>>>>>> Stashed changes

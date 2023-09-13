@@ -16,8 +16,4 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
     is_active = Column(Boolean(), default=True)
     is_superuser = Column(Boolean(), default=False)
-<<<<<<< Updated upstream
     items = relationship("Item", back_populates="owner")
-=======
-    items = relationship("Item", back_populates="owner")
->>>>>>> Stashed changes

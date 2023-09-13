@@ -2,8 +2,4 @@
 # imported by Alembic
 from app.db.base_class import Base  # noqa
 from app.models.item import Item  # noqa
-<<<<<<< Updated upstream
 from app.models.user import User  # noqa
-=======
-from app.models.user import User  # noqa
->>>>>>> Stashed changes
