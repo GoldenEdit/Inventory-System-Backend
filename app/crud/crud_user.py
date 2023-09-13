@@ -52,8 +52,4 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         return user.is_superuser
 
 
-<<<<<<< Updated upstream
 user = CRUDUser(User)
-=======
-user = CRUDUser(User)
->>>>>>> Stashed changes

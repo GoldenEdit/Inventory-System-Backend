@@ -31,8 +31,4 @@ class CRUDItem(CRUDBase[Item, ItemCreate, ItemUpdate]):
         )
 
 
-<<<<<<< Updated upstream
 item = CRUDItem(Item)
-=======
-item = CRUDItem(Item)
->>>>>>> Stashed changes

@@ -1,15 +1,11 @@
 import secrets
 from typing import Any, Dict, List, Optional, Union
 
-<<<<<<< Updated upstream
-from pydantic import AnyHttpUrl, BaseSettings, EmailStr, HttpUrl, PostgresDsn, validator
-=======
 from pydantic import AnyHttpUrl, EmailStr, HttpUrl, PostgresDsn, validator
 from pydantic_settings import BaseSettings
 from dotenv import load_dotenv
 
 load_dotenv()
->>>>>>> Stashed changes
 
 
 class Settings(BaseSettings):
@@ -36,13 +32,8 @@ class Settings(BaseSettings):
     SENTRY_DSN: Optional[HttpUrl] = None
 
     @validator("SENTRY_DSN", pre=True)
-<<<<<<< Updated upstream
-    def sentry_dsn_can_be_blank(cls, v: str) -> Optional[str]:
-        if len(v) == 0:
-=======
     def sentry_dsn_can_be_blank(cls, v: Optional[str]) -> Optional[str]:
         if v is None or len(v) == 0:
->>>>>>> Stashed changes
             return None
         return v
 
@@ -56,15 +47,6 @@ class Settings(BaseSettings):
     def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
         if isinstance(v, str):
             return v
-<<<<<<< Updated upstream
-        return PostgresDsn.build(
-            scheme="postgresql",
-            user=values.get("POSTGRES_USER"),
-            password=values.get("POSTGRES_PASSWORD"),
-            host=values.get("POSTGRES_SERVER"),
-            path=f"/{values.get('POSTGRES_DB') or ''}",
-        )
-=======
         user = values.get("POSTGRES_USER")
         password = values.get("POSTGRES_PASSWORD")
         host = values.get("POSTGRES_SERVER")
@@ -74,7 +56,6 @@ class Settings(BaseSettings):
             return f"postgresql://{user}:{password}@{host}/{db}"
         else:
             return None
->>>>>>> Stashed changes
 
     SMTP_TLS: bool = True
     SMTP_PORT: Optional[int] = None
@@ -111,8 +92,4 @@ class Settings(BaseSettings):
         case_sensitive = True
 
 
-<<<<<<< Updated upstream
 settings = Settings()
-=======
-settings = Settings()
->>>>>>> Stashed changes
