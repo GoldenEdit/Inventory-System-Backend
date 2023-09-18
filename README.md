@@ -1,14 +1,12 @@
 # Inventory System Backend
 
-## Features 🌈
+## Stack
 
-1. **FastAPI Magic** - Because speed is not just about Fast & Furious movies!
-2. **PostgreSQL Integration** - Store data like a pro. No more data loss nightmares!
-3. **Docker Integration** - Set sail with a consistent environment.
+* **FastAPI** ⚡️
+* **PostgreSQL** 📊
+* **Docker Integration** 📦
 
-## Setup & Run 🏃‍♂️
-
-To set this baby up:
+## Setup & Run
 
 ```bash
 docker-compose up --build
