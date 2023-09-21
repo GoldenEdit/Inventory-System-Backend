@@ -16,4 +16,7 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
     is_active = Column(Boolean(), default=True)
     is_superuser = Column(Boolean(), default=False)
+    department = Column(String, index=True, nullable=True)
+    school = Column(String, index=True, nullable=True)
+    is_staff = Column(Boolean(), default=False)
     items = relationship("Item", back_populates="owner")
