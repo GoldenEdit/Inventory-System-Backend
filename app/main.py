@@ -21,4 +21,7 @@ if settings.BACKEND_CORS_ORIGINS:
     )
 print(cleaned_origins)
 
+print(settings.SQLALCHEMY_DATABASE_URI)
+print()
+
 app.include_router(api_router, prefix=settings.API_V1_STR)
