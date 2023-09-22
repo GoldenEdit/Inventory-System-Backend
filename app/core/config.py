@@ -1,5 +1,6 @@
 import secrets
 from typing import Any, Dict, List, Optional, Union
+import os
 
 from pydantic import AnyHttpUrl, EmailStr, HttpUrl, PostgresDsn, validator
 from pydantic_settings import BaseSettings
@@ -54,7 +55,8 @@ class Settings(BaseSettings):
         db = values.get("POSTGRES_DB")
 
         if all([user, password, host, db]):
-            return f"postgresql://{user}:{password}@{host}/{db}"
+            # return f"postgresql://{user}:{password}@{host}/{db}"
+            return os.getenv("DATABASE_URL")
         else:
             return None
 
