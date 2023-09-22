@@ -10,7 +10,6 @@ app = FastAPI(
 )
 
 # Set all CORS enabled origins
-print(settings.BACKEND_CORS_ORIGINS)
 if settings.BACKEND_CORS_ORIGINS:
     cleaned_origins = [str(origin).rstrip('/') for origin in settings.BACKEND_CORS_ORIGINS] # Remove the trailing slash that Pydantic adds
     app.add_middleware(
@@ -20,6 +19,6 @@ if settings.BACKEND_CORS_ORIGINS:
         allow_methods=["*"],
         allow_headers=["*"],
     )
-
+print(cleaned_origins)
 
 app.include_router(api_router, prefix=settings.API_V1_STR)
