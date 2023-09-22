@@ -44,11 +44,16 @@ def get_url():
     # #     return f"postgresql://{user}:{password}@{server}/{db}"
 
     # return url
-    url = os.getenv("DATABASE_URL")
-    if url:
+    environment = os.getenv("ENVIRONMENT", "development")
+    if environment == "production":
+        url = os.getenv("DATABASE_URL")
         return url.replace("postgres://", "postgresql://", 1)
     else:
-        return None  # or some default value
+        user = os.getenv("POSTGRES_USER", "postgres")
+        password = os.getenv("POSTGRES_PASSWORD", "")
+        server = os.getenv("POSTGRES_SERVER", "db")
+        db = os.getenv("POSTGRES_DB", "app")
+        return f"postgresql://{user}:{password}@{server}/{db}"
 
 
 def run_migrations_offline():
