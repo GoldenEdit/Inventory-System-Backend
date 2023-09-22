@@ -22,13 +22,20 @@ class Settings(BaseSettings):
     # "http://localhost:8080", "http://local.dockertoolbox.tiangolo.com"]'
     BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []
 
-    @validator("BACKEND_CORS_ORIGINS", pre=True)
-    def assemble_cors_origins(cls, v: Union[str, List[str]]) -> Union[List[str], str]:
-        if isinstance(v, str) and not v.startswith("["):
-            return [i.strip() for i in v.split(",")]
-        elif isinstance(v, (list, str)):
-            return v
-        raise ValueError(v)
+    @validator("SQLALCHEMY_DATABASE_URI", pre=True)
+    def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
+        if values.get("ENVIRONMENT") == "production":
+            return os.getenv("DATABASE_URL").replace("postgres://", "postgresql://", 1)
+        else:
+            user = values.get("POSTGRES_USER")
+            password = values.get("POSTGRES_PASSWORD")
+            host = values.get("POSTGRES_SERVER")
+            db = values.get("POSTGRES_DB")
+            if all([user, password, host, db]):
+                return f"postgresql://{user}:{password}@{host}/{db}"
+            else:
+                return None
+
 
     PROJECT_NAME: str
     SENTRY_DSN: Optional[HttpUrl] = None
@@ -59,7 +66,7 @@ class Settings(BaseSettings):
             return database_url.replace("postgres://", "postgresql://", 1) if database_url else None
         else:
             return None
-
+    ENVIRONMENT: str
 
     SMTP_TLS: bool = True
     SMTP_PORT: Optional[int] = None
