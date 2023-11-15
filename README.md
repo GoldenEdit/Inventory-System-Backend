@@ -2,19 +2,15 @@
 
 ## Stack
 
-* **FastAPI** ⚡️
-* **PostgreSQL** 📊
-* **Docker Integration** 📦
+- FastAPI
+- Postgres
+- Docker
 
 ## Setup & Run
 
 ```bash
 docker-compose up --build
-
 ```
-
-Visit  (http://localhost:4000/docs) for the interactive FastAPI docs!
-
 
 ## Production URL:
 
