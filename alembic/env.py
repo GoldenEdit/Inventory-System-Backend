@@ -53,7 +53,15 @@ def get_url():
         password = os.getenv("POSTGRES_PASSWORD", "")
         server = os.getenv("POSTGRES_SERVER", "db")
         db = os.getenv("POSTGRES_DB", "app")
-        return f"postgresql://{user}:{password}@{server}/{db}"
+
+        url = os.getenv("DATABASE_URL")
+        if not url:
+            return f"postgresql://{user}:{password}@{server}/{db}"
+
+        return url
+    
+    
+
 
 
 def run_migrations_offline():
