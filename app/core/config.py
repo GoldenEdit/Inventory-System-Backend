@@ -25,15 +25,20 @@ class Settings(BaseSettings):
     @validator("SQLALCHEMY_DATABASE_URI", pre=True)
     def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
         if values.get("ENVIRONMENT") == "production":
+            print("prod")
             return os.getenv("DATABASE_URL").replace("postgres://", "postgresql://", 1)
+            
         else:
             user = values.get("POSTGRES_USER")
             password = values.get("POSTGRES_PASSWORD")
             host = values.get("POSTGRES_SERVER")
             db = values.get("POSTGRES_DB")
             if all([user, password, host, db]):
+                print ("postgresql://{user}:{password}@{host}/{db}")
                 return f"postgresql://{user}:{password}@{host}/{db}"
+                
             else:
+                print("damn")
                 return None
 
 
@@ -52,20 +57,20 @@ class Settings(BaseSettings):
     POSTGRES_DB: str
     SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = None
 
-    @validator("SQLALCHEMY_DATABASE_URI", pre=True)
-    def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
-        if isinstance(v, str):
-            return v.replace("postgres://", "postgresql://", 1)
-        user = values.get("POSTGRES_USER")
-        password = values.get("POSTGRES_PASSWORD")
-        host = values.get("POSTGRES_SERVER")
-        db = values.get("POSTGRES_DB")
+    # @validator("SQLALCHEMY_DATABASE_URI", pre=True)
+    # def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
+    #     if isinstance(v, str):
+    #         return v.replace("postgres://", "postgresql://", 1)
+    #     user = values.get("POSTGRES_USER")
+    #     password = values.get("POSTGRES_PASSWORD")
+    #     host = values.get("POSTGRES_SERVER")
+    #     db = values.get("POSTGRES_DB")
 
-        if all([user, password, host, db]):
-            database_url = os.getenv("DATABASE_URL")
-            return database_url.replace("postgres://", "postgresql://", 1) if database_url else None
-        else:
-            return None
+    #     if all([user, password, host, db]):
+    #         database_url = os.getenv("DATABASE_URL")
+    #         return database_url.replace("postgres://", "postgresql://", 1) if database_url else None
+    #     else:
+    #         return None
     ENVIRONMENT: str
 
     SMTP_TLS: bool = True
